@@ -1,21 +1,26 @@
-# Step 1: Base image
+# Step 1: Use Node 18 Alpine as the base
 FROM node:18-alpine
 
-# Step 2: Set working directory inside the container
+# Step 2: Install build essentials (Required for Strapi on Alpine)
+RUN apk add --no-cache build-base gcc autoconf automake libtool zlib-dev libpng-dev nasm python3
+
+# Step 3: Set working directory
 WORKDIR /opt/app
 
-# Step 3: Copy package files from your specific project folder
+# Step 4: Copy package files from my-project
+# Ensure these files exist in your 'my-project' folder
 COPY my-project/package.json my-project/package-lock.json ./
 
-# Step 4: Install dependencies
+# Step 5: Install dependencies
 RUN npm install
 
-# Step 5: Copy the rest of the application code from my-project
+# Step 6: Copy the rest of the app
 COPY my-project/ .
 
-# Step 6: Build the Strapi project
+# Step 7: Build for production
 RUN npm run build
 
-# Step 7: Expose port 1337 and start the app
+# Step 8: Expose port 1337
 EXPOSE 1337
+
 CMD ["npm", "run", "start"]
