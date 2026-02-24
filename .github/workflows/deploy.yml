@@ -49,7 +49,8 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: nithin-strapi-v6-service
           cluster: nithin-strapi-v6-cluster
-          codedeploy-appspec: appspec.yaml
+          # Error fix: Matches the .yml extension in your project
+          codedeploy-appspec: appspec.yml 
           codedeploy-application: nithin-strapi-v6-app
           codedeploy-deployment-group: nithin-strapi-v6-dg
           wait-for-service-stability: true
