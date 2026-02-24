@@ -1,4 +1,5 @@
-FROM node:18-alpine
+# Use the standard Node image (not alpine) for better compatibility
+FROM node:18
 
 # Set environment to production
 ENV NODE_ENV=production
@@ -6,20 +7,22 @@ ENV NODE_ENV=production
 # Create app directory
 WORKDIR /opt/app
 
-# Copy only the package.json first
-COPY my-project/package.json ./
+# Copy package files from your subfolder
+COPY my-project/package.json my-project/package-lock.json ./
 
-# Install dependencies ignoring the lock file to bypass the previous errors
-RUN npm install --production --no-package-lock --legacy-peer-deps
+# Clean npm cache and install dependencies
+# We use --network-timeout to prevent errors if the connection is slow
+RUN npm cache clean --force && \
+    npm install --production --legacy-peer-deps --network-timeout=100000
 
-# Now copy the rest of the project
+# Copy the rest of your project files
 COPY my-project/ .
 
-# Build Strapi
+# Build the Strapi admin panel
 RUN npm run build
 
-# Expose the port
+# Expose the Strapi port
 EXPOSE 1337
 
-# Start Strapi
+# Start the application
 CMD ["npm", "run", "start"]
