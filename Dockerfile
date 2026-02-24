@@ -1,26 +1,18 @@
-FROM node:18-alpine
+# Step 1: Use the official Strapi image that already has everything ready
+FROM strapi/strapi:latest
 
-# Set environment to production
-ENV NODE_ENV=production
-
-# Create app directory
+# Step 2: Set the working directory
 WORKDIR /opt/app
 
-# Copy dependency files first
-COPY my-project/package.json my-project/package-lock.json ./
-
-# Install dependencies using 'npm install' with a legacy peer deps flag 
-# to avoid common version conflicts
-RUN npm install --production --legacy-peer-deps
-
-# Copy all the source code
+# Step 3: Copy your project files into the container
+# We copy 'my-project' content directly to /opt/app
 COPY my-project/ .
 
-# Build Strapi
+# Step 4: Build the admin panel
 RUN npm run build
 
-# Expose port
+# Step 5: Expose the port
 EXPOSE 1337
 
-# Start Strapi
+# Step 6: Start the app
 CMD ["npm", "run", "start"]
