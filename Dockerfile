@@ -1,26 +1,26 @@
-# Use Node.js 18 on Alpine Linux for a small image size
 FROM node:18-alpine
 
-# Set the environment to production
+# Set environment to production
 ENV NODE_ENV=production
 
-# Create and set the working directory inside the container
+# Create app directory
 WORKDIR /opt/app
 
-# Copy the dependency files from the 'my-project' subfolder
+# Copy dependency files first
 COPY my-project/package.json my-project/package-lock.json ./
 
-# Install only production dependencies
-RUN npm install --production
+# Install dependencies using 'npm install' with a legacy peer deps flag 
+# to avoid common version conflicts
+RUN npm install --production --legacy-peer-deps
 
-# Copy all the source code from the 'my-project' subfolder to the container
+# Copy all the source code
 COPY my-project/ .
 
-# Build the Strapi admin panel and project
+# Build Strapi
 RUN npm run build
 
-# Expose the default Strapi port
+# Expose port
 EXPOSE 1337
 
-# Start the Strapi application
+# Start Strapi
 CMD ["npm", "run", "start"]

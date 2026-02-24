@@ -6,3 +6,6 @@ my-project/build
 .env
 terraform.tfstate
 .terraform
+node_modules
+.git
+.terraform
