@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout Code
@@ -19,6 +22,10 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+          # Assuming the role you provided to bypass user limits
+          role-to-assume: arn:aws:iam::811738710312:role/ecs_fargate_taskRole
+          role-duration-seconds: 1200
+          role-session-name: GitHubActionsDeployment
 
       - name: Login to Amazon ECR
         id: login-ecr
