@@ -8,14 +8,5 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
-
-  # Global bypass for tagging
-  default_tags {
-    tags = {}
-  }
-
-  ignore_tags {
-    key_prefixes = ["*"]
-  }
+  region = "us-east-1"
 }

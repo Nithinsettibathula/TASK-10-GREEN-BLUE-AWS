@@ -1,22 +1,25 @@
-variable "aws_region" {
-  description = "AWS Region"
-  default     = "us-east-1" 
+variable "project_prefix" { 
+  default = "nithin-strapi-v6" 
 }
 
-variable "vpc_id" {
-  default = "vpc-0b4d6262d67525f8b"
+variable "vpc_id" { 
+  default = "vpc-0e3c4ba63f48bf817" 
 }
 
 variable "public_subnets" {
   type    = list(string)
-  default = ["subnet-07720f09127d19cc7", "subnet-022704c446337b2ce"]
+  default = ["subnet-09f5a8fbf473fe037", "subnet-065a13e8fac29a3d2"]
 }
 
 variable "private_subnets" {
   type    = list(string)
-  default = ["subnet-07720f09127d19cc7", "subnet-022704c446337b2ce"]
+  default = ["subnet-0f528ccbb5eb596f6", "subnet-01db8f99b462527b6"]
 }
 
-variable "ecs_task_role_arn" {
-  default = "arn:aws:iam::811738710312:role/ecs_fargate_taskRole"
+variable "codedeploy_role_arn" { 
+  default = "arn:aws:iam::811738710312:role/codedeploy_role" 
+}
+
+variable "ecs_task_role_arn" { 
+  default = "arn:aws:iam::811738710312:role/ecs_fargate_taskRole" 
 }

@@ -1,19 +1,10 @@
-# Security Group for the Application Load Balancer
 resource "aws_security_group" "alb_sg" {
-  name        = "nithin-task10-alb-sg-v4"
-  description = "Allow HTTP and HTTPS traffic to ALB"
-  vpc_id      = var.vpc_id
+  name   = "${var.project_prefix}-alb-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 80
     to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -26,11 +17,9 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
-# Security Group for ECS Tasks
 resource "aws_security_group" "ecs_sg" {
-  name        = "nithin-task10-ecs-sg-v4"
-  description = "Allow traffic from ALB on port 1337"
-  vpc_id      = var.vpc_id
+  name   = "${var.project_prefix}-ecs-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port       = 1337
