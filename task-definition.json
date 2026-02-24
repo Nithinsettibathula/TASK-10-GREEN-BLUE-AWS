@@ -1,0 +1,23 @@
+{
+    "family": "nithin-strapi-task-v4",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "strapi",
+            "image": "strapi/strapi:latest",
+            "portMappings": [
+                {
+                    "containerPort": 1337,
+                    "hostPort": 1337,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "512",
+    "memory": "1024"
+}

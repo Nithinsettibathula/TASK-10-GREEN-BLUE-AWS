@@ -1,0 +1,8 @@
+my-project/node_modules
+my-project/.tmp
+my-project/.cache
+my-project/build
+.git
+.env
+terraform.tfstate
+.terraform
