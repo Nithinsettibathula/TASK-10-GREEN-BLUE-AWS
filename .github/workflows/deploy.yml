@@ -3,7 +3,7 @@ name: Deploy Strapi to AWS ECS
 on:
   push:
     branches:
-      - main # Or your specific branch name
+      - main
 
 jobs:
   deploy:
@@ -28,7 +28,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: nithin-strapi-repo # You'll need to create this in ECR
+          ECR_REPOSITORY: nithin-strapi-repo
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -39,7 +39,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json # You will need this file in your root
+          task-definition: task-definition.json
           container-name: strapi
           image: ${{ steps.build-image.outputs.image }}
 
