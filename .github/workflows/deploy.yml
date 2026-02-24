@@ -29,7 +29,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: nithin-strapi-repo
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: latest  # Forced to 'latest' to match task-definition
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -49,8 +49,7 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: nithin-strapi-v6-service
           cluster: nithin-strapi-v6-cluster
-          # Error fix: Matches the .yml extension in your project
           codedeploy-appspec: appspec.yml 
           codedeploy-application: nithin-strapi-v6-app
           codedeploy-deployment-group: nithin-strapi-v6-dg
-          wait-for-service-stability: true
+          wait-for-service-stability: false # Changed to false so GitHub doesn't timeout while CodeDeploy works
